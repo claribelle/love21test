@@ -20,6 +20,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: #ffffff;
@@ -36,7 +40,7 @@
             color: #f0f0f0;
         }
         body.dark-mode .navbar {
-            background: rgba(18, 18, 18, 0.92);
+            background: rgba(18, 18, 18, 0.95);
             border-bottom-color: #333;
         }
         body.dark-mode .navbar-bottom a {
@@ -77,6 +81,27 @@
         body.dark-mode .testimonial-back p {
             color: #000 !important;
         }
+        body.dark-mode .progress-line {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        body.dark-mode .progress-line .progress-fill {
+            background: #cc0000;
+        }
+        body.dark-mode .progress-dot {
+            background: #333;
+            border-color: #555;
+        }
+        body.dark-mode .progress-dot.active {
+            background: #cc0000;
+            border-color: #cc0000;
+            box-shadow: 0 0 20px rgba(204, 0, 0, 0.3);
+        }
+        body.dark-mode .progress-dot .dot-label {
+            color: #aaa;
+        }
+        body.dark-mode .progress-dot.active .dot-label {
+            color: #fff;
+        }
 
         /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar { width: 8px; }
@@ -84,22 +109,111 @@
         ::-webkit-scrollbar-thumb { background: #cc0000; border-radius: 10px; }
         body.dark-mode ::-webkit-scrollbar-track { background: #2a2a2a; }
 
-        /* ===== STICKY HEADER - THINNER ===== */
+        /* ===== PROGRESS INDICATOR (Side Line) ===== */
+        .progress-line {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60vh;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            z-index: 9997;
+            transition: background 0.3s;
+        }
+        .progress-line .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: #cc0000;
+            border-radius: 10px;
+            transition: height 0.15s ease-out;
+        }
+
+        /* ===== DOTS ON THE PROGRESS LINE ===== */
+        .progress-dots {
+            position: fixed;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+        .progress-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .progress-dot:hover {
+            transform: scale(1.2);
+            border-color: #cc0000;
+        }
+        .progress-dot.active {
+            background: #cc0000;
+            border-color: #cc0000;
+            box-shadow: 0 0 20px rgba(204, 0, 0, 0.25);
+            transform: scale(1.15);
+        }
+        .progress-dot .dot-label {
+            position: absolute;
+            right: 28px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #888;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateX(8px);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .progress-dot:hover .dot-label,
+        .progress-dot.active .dot-label {
+            opacity: 1;
+            transform: translateX(0);
+            color: #cc0000;
+        }
+        body.dark-mode .progress-dot .dot-label {
+            color: #666;
+        }
+        body.dark-mode .progress-dot:hover .dot-label,
+        body.dark-mode .progress-dot.active .dot-label {
+            color: #cc0000;
+        }
+
+        /* ===== STICKY HEADER ===== */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 9998;
+            z-index: 9996;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            transition: background 0.3s;
+            transition: background 0.3s, box-shadow 0.3s;
             padding: 4px 30px;
         }
         body.dark-mode .navbar {
             background: rgba(18, 18, 18, 0.95);
             border-bottom-color: #333;
+        }
+        .navbar.scrolled {
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.06);
         }
 
         .navbar-top {
@@ -109,24 +223,31 @@
             padding: 2px 0;
         }
 
-       <!-- LEFT: Logo as image -->
-<div class="logo-wrapper">
-    <img src="love21_logo.png" alt="Love 21 Foundation Logo" />
-</div>
+        /* ===== LOGO ===== */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .logo-wrapper img {
+            max-height: 42px;
+            width: auto;
+            display: block;
+        }
 
-        /* ===== RIGHT GROUP - ALL TEXT PUSHED RIGHT ===== */
         .navbar-top .right-group {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             margin-left: auto;
         }
 
         .navbar-top .lang-switcher {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
         .navbar-top .lang-switcher button {
             background: none;
@@ -137,7 +258,7 @@
             padding: 2px 8px;
             border-radius: 4px;
             transition: background 0.2s;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
         .navbar-top .lang-switcher button:hover {
             background: rgba(204, 0, 0, 0.08);
@@ -160,7 +281,7 @@
             background: rgba(204, 0, 0, 0.08);
         }
 
-        /* ===== NAVIGATION LINKS - RIGHT ALIGNED ===== */
+        /* ===== NAVIGATION ===== */
         .navbar-bottom {
             display: flex;
             justify-content: flex-end;
@@ -177,7 +298,7 @@
             color: #555;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: color 0.2s;
             padding: 2px 0;
             border-bottom: 2px solid transparent;
@@ -210,7 +331,7 @@
             transition: transform 0.3s, box-shadow 0.3s;
             letter-spacing: 1px;
             text-transform: uppercase;
-            font-size: 1.1rem;
+            font-size: 1rem;
             animation: pulse-donate 2s infinite;
         }
         .donate-btn:hover {
@@ -219,10 +340,10 @@
         }
         @keyframes pulse-donate {
             0%, 100% { box-shadow: 0 6px 24px rgba(204, 0, 0, 0.35); }
-            50% { box-shadow: 0 6px 40px rgba(204, 0, 0, 0.6); }
+            50% { box-shadow: 0 6px 40px rgba(204, 0, 0, 0.55); }
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO ===== */
         .hero {
             position: relative;
             height: 100vh;
@@ -231,7 +352,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 0;
         }
         .hero video {
             position: absolute;
@@ -272,23 +392,36 @@
             transform: translateX(-50%);
             z-index: 2;
             color: #ffffff;
-            font-size: 1rem;
+            font-size: 0.9rem;
             opacity: 0.7;
             animation: bounce 2s infinite;
             text-align: center;
         }
         .scroll-indicator i {
             display: block;
-            font-size: 28px;
-            margin-top: 8px;
+            font-size: 24px;
+            margin-top: 6px;
         }
         @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-12px); }
+            50% { transform: translateX(-50%) translateY(-10px); }
         }
 
-        /* ===== SPACER FOR FIXED HEADER ===== */
-        .header-spacer { height: 85px; }
+        /* ===== SPACER ===== */
+        .header-spacer { height: 80px; }
+
+        /* ===== SECTION DIVIDERS ===== */
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: #cc0000;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+            opacity: 0.6;
+        }
+        .section-divider.light {
+            background: rgba(204, 0, 0, 0.3);
+        }
 
         /* ===== OUR STORY ===== */
         .story-section {
@@ -340,7 +473,7 @@
             border-radius: 20px;
         }
 
-        /* ===== JEFF ROTMEYER SECTION ===== */
+        /* ===== CEO SECTION ===== */
         .ceo-section {
             padding: 60px 60px;
             max-width: 1300px;
@@ -363,16 +496,16 @@
         .ceo-text h2 .red { color: #cc0000; }
         .ceo-text p { color: #222; font-size: 1.05rem; }
 
-        /* ===== TESTIMONIALS (RECTANGLE CARDS) ===== */
+        /* ===== TESTIMONIALS ===== */
         .testimonials-section {
-            padding: 80px 60px;
+            padding: 80px 60px 100px;
             background: #ffffff;
             text-align: center;
         }
         .testimonials-section h2 .red { color: #cc0000; }
         .testimonials-section > p {
             color: #555;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 50px;
         }
 
@@ -416,7 +549,6 @@
             padding: 30px 24px;
             text-align: center;
         }
-        /* Front: Image background with name */
         .testimonial-front {
             background-size: cover;
             background-position: center;
@@ -437,7 +569,6 @@
             font-weight: 800;
             text-shadow: 0 2px 30px rgba(0,0,0,0.6);
         }
-        /* Back: Plain red with text */
         .testimonial-back {
             background: #cc0000;
             color: #000;
@@ -464,7 +595,7 @@
         .involve-section h2 .red { color: #cc0000; }
         .involve-section p {
             color: #555;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             max-width: 600px;
             margin: 0 auto 50px;
         }
@@ -472,13 +603,13 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 25px;
+            gap: 20px;
         }
         .involve-btn {
             padding: 18px 48px;
             border: none;
             border-radius: 60px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             background: #cc0000;
             color: #fff;
@@ -513,26 +644,33 @@
         }
         footer .socials a {
             color: #fff;
-            font-size: 26px;
+            font-size: 24px;
             margin: 0 12px;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
         }
-        footer .socials a:hover { color: #cc0000; }
-        footer p { font-size: 1rem; margin-top: 16px; }
+        footer .socials a:hover {
+            color: #cc0000;
+            transform: scale(1.1);
+        }
+        footer p { font-size: 0.95rem; margin-top: 16px; }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1200px) {
             .testimonials-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .progress-line, .progress-dots {
+                display: none;
+            }
         }
 
         @media (max-width: 992px) {
-            .navbar { padding: 6px 16px; }
+            .navbar { padding: 4px 16px; }
             .navbar-top { flex-direction: column; align-items: stretch; gap: 4px; }
             .navbar-top .right-group { justify-content: flex-end; flex-wrap: wrap; }
             .navbar-bottom { justify-content: center; gap: 12px; }
-            .navbar-bottom a { font-size: 0.8rem; }
+            .navbar-bottom a { font-size: 0.75rem; }
             .story-section, .ceo-section {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -540,12 +678,13 @@
                 gap: 40px;
             }
             .story-text p { max-width: 100%; }
-            .ceo-image img { max-width: 300px; margin: 0 auto; }
+            .ceo-image img { max-width: 280px; margin: 0 auto; }
             .testimonials-section { padding: 60px 30px; }
             .testimonial-card { height: 320px; }
             .involve-section { padding: 60px 30px; }
-            .header-spacer { height: 100px; }
-            .donate-btn { padding: 14px 28px; font-size: 1rem; bottom: 20px; right: 20px; }
+            .header-spacer { height: 95px; }
+            .donate-btn { padding: 14px 28px; font-size: 0.9rem; bottom: 20px; right: 20px; }
+            .progress-line, .progress-dots { display: none; }
         }
 
         @media (max-width: 768px) {
@@ -555,19 +694,18 @@
             }
             .testimonial-card { height: 260px; }
             .testimonial-front .name { font-size: 1.6rem; }
-            .logo-wrapper .logo-main { font-size: 1.2rem; }
-            .logo-wrapper .logo-sub { font-size: 0.65rem; }
-            .navbar-top .lang-switcher button { font-size: 0.7rem; padding: 2px 6px; }
+            .logo-wrapper img { max-height: 34px; }
+            .navbar-top .lang-switcher button { font-size: 0.65rem; padding: 2px 4px; }
+            .section-divider { width: 60px; }
         }
 
         @media (max-width: 600px) {
             .navbar { padding: 4px 10px; }
-            .navbar-top .lang-switcher button { font-size: 0.65rem; padding: 1px 4px; }
+            .navbar-top .lang-switcher button { font-size: 0.6rem; padding: 1px 4px; }
             .navbar-bottom { gap: 8px; }
-            .navbar-bottom a { font-size: 0.7rem; }
-            .logo-wrapper .logo-main { font-size: 1rem; }
-            .logo-wrapper .logo-sub { font-size: 0.55rem; }
-            .hero-content h1 { font-size: 2.8rem; }
+            .navbar-bottom a { font-size: 0.65rem; }
+            .logo-wrapper img { max-height: 28px; }
+            .hero-content h1 { font-size: 2.5rem; }
             .story-section, .ceo-section { padding: 30px 16px; }
             .testimonials-section { padding: 40px 16px; }
             .testimonials-grid {
@@ -578,10 +716,12 @@
             .testimonial-front .name { font-size: 1.2rem; }
             .testimonial-back h3 { font-size: 1.1rem; }
             .testimonial-back p { font-size: 0.8rem; max-width: 160px; }
-            .involve-btn { min-width: 140px; padding: 12px 20px; font-size: 0.9rem; }
+            .involve-btn { min-width: 140px; padding: 14px 20px; font-size: 0.9rem; }
             .video-wrapper { max-width: 100%; }
-            .header-spacer { height: 85px; }
-            .donate-btn { padding: 10px 20px; font-size: 0.85rem; bottom: 16px; right: 16px; }
+            .header-spacer { height: 80px; }
+            .donate-btn { padding: 10px 18px; font-size: 0.8rem; bottom: 16px; right: 16px; }
+            .section-divider { width: 50px; height: 3px; }
+            .progress-line, .progress-dots { display: none; }
         }
 
         @media (max-width: 480px) {
@@ -594,20 +734,45 @@
             .testimonial-back { padding: 14px; }
             .testimonial-back h3 { font-size: 0.9rem; margin-bottom: 6px; }
             .testimonial-back p { font-size: 0.7rem; max-width: 120px; }
+            .involve-btn { min-width: 120px; padding: 12px 16px; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== PROGRESS INDICATOR (Side Line) ===== -->
+    <div class="progress-line" id="progressLine">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- ===== PROGRESS DOTS ===== -->
+    <div class="progress-dots" id="progressDots">
+        <div class="progress-dot active" data-target="hero" onclick="scrollToSection('hero')">
+            <span class="dot-label">Top</span>
+        </div>
+        <div class="progress-dot" data-target="story" onclick="scrollToSection('story')">
+            <span class="dot-label">Our Story</span>
+        </div>
+        <div class="progress-dot" data-target="ceo" onclick="scrollToSection('ceo')">
+            <span class="dot-label">CEO</span>
+        </div>
+        <div class="progress-dot" data-target="testimonials" onclick="scrollToSection('testimonials')">
+            <span class="dot-label">Testimonials</span>
+        </div>
+        <div class="progress-dot" data-target="involve" onclick="scrollToSection('involve')">
+            <span class="dot-label">Get Involved</span>
+        </div>
+        <div class="progress-dot" data-target="footer" onclick="scrollToSection('footer')">
+            <span class="dot-label">Footer</span>
+        </div>
+    </div>
+
     <!-- ===== STICKY HEADER ===== -->
     <header class="navbar" id="mainHeader">
         <div class="navbar-top">
-            <!-- LEFT: Logo across 2 lines -->
+            <!-- LEFT: Logo -->
             <div class="logo-wrapper">
-                <div class="logo-main">#SOMUCHABILITY</div>
-                <div class="logo-sub">Love 21 Foundation</div>
-                <!-- OR use an image: -->
-                <!-- <img src="love21_logo.png" alt="Logo" /> -->
+                <img src="love21_logo.png" alt="Love 21 Foundation Logo" />
             </div>
 
             <!-- RIGHT: Language + Dark Mode -->
@@ -623,7 +788,7 @@
             </div>
         </div>
 
-        <!-- Bottom: Navigation links - Right aligned -->
+        <!-- Bottom: Navigation -->
         <nav class="navbar-bottom">
             <a href="#story">Leadership</a>
             <a href="#testimonials">Our Programmes</a>
@@ -636,13 +801,13 @@
     <!-- Spacer -->
     <div class="header-spacer"></div>
 
-    <!-- ===== STICKY DONATE BUTTON ===== -->
+    <!-- ===== DONATE BUTTON ===== -->
     <button class="donate-btn" onclick="alert('❤️ Thank you for your generosity!')">
         <i class="fas fa-heart" style="margin-right: 10px;"></i> DONATE
     </button>
 
     <!-- ===== HERO ===== -->
-    <section class="hero">
+    <section class="hero" id="hero">
         <video autoplay muted loop playsinline>
             <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
         </video>
@@ -662,6 +827,7 @@
     <section class="story-section aniview" data-av-animation="fadeInUp" id="story">
         <div class="story-text">
             <h2>Our <span class="red">Story</span></h2>
+            <div class="section-divider"></div>
             <p>
                 Founded with a simple belief — that every person, regardless of ability,
                 deserves the chance to shine. <strong>#SOMUCHABILITY</strong> started as
@@ -688,12 +854,13 @@
     </section>
 
     <!-- ===== JEFF ROTMEYER, CEO ===== -->
-    <section class="ceo-section aniview" data-av-animation="fadeInUp">
+    <section class="ceo-section aniview" data-av-animation="fadeInUp" id="ceo">
         <div class="ceo-image">
             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face" alt="Jeff Rotmeyer, CEO" />
         </div>
         <div class="ceo-text">
             <h2>Jeff Rotmeyer, <span class="red">CEO</span></h2>
+            <div class="section-divider" style="margin-left: 0;"></div>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a euismod metus. Nam aliquam, ante eu blandit rhoncus, urna risus faucibus neque, in elementum dolor metus sed purus. Duis a varius enim. Aenean lacinia posuere finibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ligula mauris, mollis eget orci non, semper imperdiet neque. Vestibulum accumsan sit amet ante vel elementum.
             </p>
@@ -703,6 +870,7 @@
     <!-- ===== TESTIMONIALS ===== -->
     <section class="testimonials-section aniview" data-av-animation="fadeInUp" id="testimonials">
         <h2>Testimonials <span class="red">❤️</span></h2>
+        <div class="section-divider"></div>
         <p>Hover over each card to flip and read their story</p>
 
         <div class="testimonials-grid">
@@ -714,8 +882,8 @@
                         <span class="name">Crystal</span>
                     </div>
                     <div class="testimonial-back">
-                        <h3>✨ Crystal</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam, ante eu blandit rhoncus.</p>
+                        <h3>Subtitle</h3>
+                        <p>lorem ipsum lalala ababbaba</p>
                     </div>
                 </div>
             </div>
@@ -728,8 +896,8 @@
                         <span class="name">Marcus</span>
                     </div>
                     <div class="testimonial-back">
-                        <h3>🌟 Marcus</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam, ante eu blandit rhoncus.</p>
+                        <h3>Subtitle</h3>
+                        <p>lorem ipsum lalala ababbaba</p>
                     </div>
                 </div>
             </div>
@@ -742,8 +910,8 @@
                         <span class="name">Priya</span>
                     </div>
                     <div class="testimonial-back">
-                        <h3>🎯 Priya</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam, ante eu blandit rhoncus.</p>
+                        <h3>Subtitle</h3>
+                        <p>lorem ipsum lalala ababbaba</p>
                     </div>
                 </div>
             </div>
@@ -756,8 +924,8 @@
                         <span class="name">James</span>
                     </div>
                     <div class="testimonial-back">
-                        <h3>💪 James</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam, ante eu blandit rhoncus.</p>
+                        <h3>Subtitle</h3>
+                        <p>lorem ipsum lalala ababbaba</p>
                     </div>
                 </div>
             </div>
@@ -767,6 +935,7 @@
     <!-- ===== GET INVOLVED ===== -->
     <section class="involve-section aniview" data-av-animation="fadeInUp" id="involve">
         <h2>Get <span class="red">Involved</span></h2>
+        <div class="section-divider"></div>
         <p>Join us in making a difference. Your support changes lives.</p>
         <div class="involve-buttons">
             <button class="involve-btn" onclick="alert('📅 Check out our upcoming events!')">
@@ -798,6 +967,7 @@
 
     <!-- ===== SCRIPTS ===== -->
     <script>
+        // ===== ANIVIEW INIT =====
         $(document).ready(function() {
             $('.aniview').AniView({
                 animateClass: 'animate__animated',
@@ -806,31 +976,91 @@
             });
         });
 
+        // ===== DARK MODE =====
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             const icon = document.querySelector('.dark-toggle i');
             icon.className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
         }
 
+        // ===== LANGUAGE =====
         function switchLang(lang) {
             document.querySelectorAll('.lang-switcher button').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             console.log('Language switched to:', lang);
         }
 
+        // ===== SMOOTH SCROLL =====
+        function scrollToSection(id) {
+            const target = document.getElementById(id);
+            if (target) {
+                const offset = document.querySelector('.navbar').offsetHeight + 10;
+                window.scrollTo({
+                    top: target.getBoundingClientRect().top + window.pageYOffset - offset,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // ===== NAV LINKS =====
         document.querySelectorAll('.navbar-bottom a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offset = document.querySelector('.navbar').offsetHeight + 10;
-                    window.scrollTo({
-                        top: target.getBoundingClientRect().top + window.pageYOffset - offset,
-                        behavior: 'smooth'
-                    });
-                }
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
             });
         });
+
+        // ===== PROGRESS INDICATOR =====
+        function updateProgress() {
+            const sections = ['hero', 'story', 'ceo', 'testimonials', 'involve', 'footer'];
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+            // Update fill line
+            document.getElementById('progressFill').style.height = Math.min(scrollPercent, 100) + '%';
+
+            // Update dots
+            const dots = document.querySelectorAll('.progress-dot');
+            let activeIndex = 0;
+            const headerHeight = document.querySelector('.navbar').offsetHeight + 20;
+
+            sections.forEach((id, index) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= headerHeight) {
+                        activeIndex = index;
+                    }
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+        }
+
+        // ===== HEADER SHADOW =====
+        function updateHeaderShadow() {
+            const navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        // ===== EVENT LISTENERS =====
+        window.addEventListener('scroll', () => {
+            updateProgress();
+            updateHeaderShadow();
+        });
+
+        window.addEventListener('resize', updateProgress);
+
+        // Initial call
+        updateProgress();
     </script>
 
 </body>
