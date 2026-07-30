@@ -496,7 +496,7 @@
         .ceo-text h2 .red { color: #cc0000; }
         .ceo-text p { color: #222; font-size: 1.05rem; }
 
-        /* ===== TESTIMONIALS ===== */
+                /* ===== TESTIMONIALS (Flip Cards) ===== */
         .testimonials-section {
             padding: 80px 60px 100px;
             background: #ffffff;
@@ -519,8 +519,9 @@
 
         .testimonial-card {
             perspective: 1200px;
-            height: 380px;
+            height: 340px;
             cursor: pointer;
+            list-style: none;
         }
         .testimonial-inner {
             position: relative;
@@ -549,6 +550,7 @@
             padding: 30px 24px;
             text-align: center;
         }
+        /* Front: Image background with name */
         .testimonial-front {
             background-size: cover;
             background-position: center;
@@ -569,6 +571,7 @@
             font-weight: 800;
             text-shadow: 0 2px 30px rgba(0,0,0,0.6);
         }
+        /* Back: Plain red with text */
         .testimonial-back {
             background: #cc0000;
             color: #000;
@@ -585,7 +588,7 @@
             max-width: 260px;
             color: #000;
         }
-
+        
         /* ===== GET INVOLVED ===== */
         .involve-section {
             padding: 80px 60px;
