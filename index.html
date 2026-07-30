@@ -81,21 +81,6 @@
         body.dark-mode .testimonial-back p {
             color: #000 !important;
         }
-        body.dark-mode .progress-line {
-            background: rgba(255, 255, 255, 0.06);
-        }
-        body.dark-mode .progress-line .progress-fill {
-            background: #cc0000;
-        }
-        body.dark-mode .progress-dot {
-            background: #222;
-            border-color: #444;
-        }
-        body.dark-mode .progress-dot.active {
-            background: #cc0000;
-            border-color: #cc0000;
-            box-shadow: 0 0 20px rgba(204, 0, 0, 0.2);
-        }
 
         /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar { width: 6px; }
@@ -103,7 +88,7 @@
         ::-webkit-scrollbar-thumb { background: #cc0000; border-radius: 10px; }
         body.dark-mode ::-webkit-scrollbar-track { background: #1a1a1a; }
 
-        /* ===== PROGRESS INDICATOR ===== */
+        /* ===== PROGRESS LINE (Single, no dots) ===== */
         .progress-line {
             position: fixed;
             right: 24px;
@@ -126,63 +111,11 @@
             border-radius: 10px;
             transition: height 0.15s ease-out;
         }
-
-        .progress-dots {
-            position: fixed;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 9998;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
+        body.dark-mode .progress-line {
+            background: rgba(255, 255, 255, 0.06);
         }
-        .progress-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #fff;
-            border: 2px solid #ddd;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .progress-dot:hover {
-            transform: scale(1.2);
-            border-color: #cc0000;
-        }
-        .progress-dot.active {
+        body.dark-mode .progress-line .progress-fill {
             background: #cc0000;
-            border-color: #cc0000;
-            box-shadow: 0 0 16px rgba(204, 0, 0, 0.2);
-            transform: scale(1.1);
-        }
-        .progress-dot .dot-label {
-            position: absolute;
-            right: 24px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: #999;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            transform: translateX(6px);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-        .progress-dot:hover .dot-label,
-        .progress-dot.active .dot-label {
-            opacity: 1;
-            transform: translateX(0);
-            color: #cc0000;
-        }
-        body.dark-mode .progress-dot .dot-label {
-            color: #666;
-        }
-        body.dark-mode .progress-dot:hover .dot-label,
-        body.dark-mode .progress-dot.active .dot-label {
-            color: #cc0000;
         }
 
         /* ===== STICKY HEADER ===== */
@@ -383,13 +316,8 @@
             margin-top: 6px;
         }
         @keyframes bounce {
-            0%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-8px);
-            }
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
         }
 
         /* ===== SPACER ===== */
@@ -493,7 +421,7 @@
             font-size: 1rem;
         }
 
-        /* ===== TESTIMONIALS ===== */
+        /* ===== TESTIMONIALS - FIXED FLIP CARDS ===== */
         .testimonials-section {
             padding: 80px 60px;
             background: #ffffff;
@@ -507,7 +435,7 @@
         .testimonials-section h2 .red {
             color: #cc0000;
         }
-        .testimonials-section>p {
+        .testimonials-section > p {
             color: #666;
             font-size: 1rem;
             margin-bottom: 50px;
@@ -554,6 +482,7 @@
             padding: 30px 24px;
             text-align: center;
         }
+        /* FRONT: Image background with name overlay */
         .testimonial-front {
             background-size: cover;
             background-position: center;
@@ -566,7 +495,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             border-radius: 16px;
         }
         .testimonial-front .name {
@@ -576,6 +505,7 @@
             font-weight: 700;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
         }
+        /* BACK: Plain red with text */
         .testimonial-back {
             background: #cc0000;
             color: #000;
@@ -679,8 +609,7 @@
             .testimonials-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .progress-line,
-            .progress-dots {
+            .progress-line {
                 display: none;
             }
         }
@@ -737,8 +666,7 @@
                 bottom: 20px;
                 right: 20px;
             }
-            .progress-line,
-            .progress-dots {
+            .progress-line {
                 display: none;
             }
         }
@@ -828,8 +756,7 @@
             .involve-section h2 {
                 font-size: 1.8rem;
             }
-            .progress-line,
-            .progress-dots {
+            .progress-line {
                 display: none;
             }
         }
@@ -861,30 +788,9 @@
 </head>
 <body>
 
-    <!-- ===== PROGRESS INDICATOR ===== -->
+    <!-- ===== PROGRESS LINE (Single) ===== -->
     <div class="progress-line" id="progressLine">
         <div class="progress-fill" id="progressFill"></div>
-    </div>
-
-    <div class="progress-dots" id="progressDots">
-        <div class="progress-dot active" data-target="hero" onclick="scrollToSection('hero')">
-            <span class="dot-label">Top</span>
-        </div>
-        <div class="progress-dot" data-target="story" onclick="scrollToSection('story')">
-            <span class="dot-label">Story</span>
-        </div>
-        <div class="progress-dot" data-target="ceo" onclick="scrollToSection('ceo')">
-            <span class="dot-label">CEO</span>
-        </div>
-        <div class="progress-dot" data-target="testimonials" onclick="scrollToSection('testimonials')">
-            <span class="dot-label">Testimonials</span>
-        </div>
-        <div class="progress-dot" data-target="involve" onclick="scrollToSection('involve')">
-            <span class="dot-label">Involve</span>
-        </div>
-        <div class="progress-dot" data-target="footer" onclick="scrollToSection('footer')">
-            <span class="dot-label">Footer</span>
-        </div>
     </div>
 
     <!-- ===== HEADER ===== -->
@@ -980,13 +886,14 @@
         </div>
     </section>
 
-    <!-- ===== TESTIMONIALS ===== -->
+    <!-- ===== TESTIMONIALS (FIXED) ===== -->
     <section class="testimonials-section aniview" data-av-animation="fadeInUp" id="testimonials">
         <h2>Testimonials <span class="red">❤️</span></h2>
         <div class="section-divider"></div>
         <p>Hover over each card to flip and read their story</p>
 
         <div class="testimonials-grid">
+            <!-- Card 1 -->
             <div class="testimonial-card">
                 <div class="testimonial-inner">
                     <div class="testimonial-front" style="background-image: url('https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&h=400&fit=crop&crop=face');">
@@ -1000,6 +907,7 @@
                 </div>
             </div>
 
+            <!-- Card 2 -->
             <div class="testimonial-card">
                 <div class="testimonial-inner">
                     <div class="testimonial-front" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&crop=face');">
@@ -1013,6 +921,7 @@
                 </div>
             </div>
 
+            <!-- Card 3 -->
             <div class="testimonial-card">
                 <div class="testimonial-inner">
                     <div class="testimonial-front" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=400&fit=crop&crop=face');">
@@ -1026,6 +935,7 @@
                 </div>
             </div>
 
+            <!-- Card 4 -->
             <div class="testimonial-card">
                 <div class="testimonial-inner">
                     <div class="testimonial-front" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=400&fit=crop&crop=face');">
@@ -1119,32 +1029,12 @@
             });
         });
 
-        // ===== PROGRESS INDICATOR =====
+        // ===== PROGRESS LINE =====
         function updateProgress() {
-            const sections = ['hero', 'story', 'ceo', 'testimonials', 'involve', 'footer'];
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-
             document.getElementById('progressFill').style.height = Math.min(scrollPercent, 100) + '%';
-
-            const dots = document.querySelectorAll('.progress-dot');
-            let activeIndex = 0;
-            const headerHeight = document.querySelector('.navbar').offsetHeight + 20;
-
-            sections.forEach((id, index) => {
-                const el = document.getElementById(id);
-                if (el) {
-                    const rect = el.getBoundingClientRect();
-                    if (rect.top <= headerHeight) {
-                        activeIndex = index;
-                    }
-                }
-            });
-
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === activeIndex);
-            });
         }
 
         function updateHeaderShadow() {
