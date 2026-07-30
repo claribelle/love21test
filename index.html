@@ -77,15 +77,14 @@
         body.dark-mode footer {
             background: #0a0a0a;
         }
-        body.dark-mode .bubble-back {
-            background: #cc0000;
-            color: #fff;
+        body.dark-mode .testimonial-back {
+            background: #cc0000 !important;
+            color: #000 !important;
         }
-        body.dark-mode .testimonial-card .testimonial-back {
-            background: #cc0000;
-            color: #fff;
+        body.dark-mode .testimonial-back p {
+            color: #000 !important;
         }
-        body.dark-mode .testimonial-card .testimonial-front {
+        body.dark-mode .testimonial-front {
             border-color: #cc0000;
         }
 
@@ -122,9 +121,15 @@
             gap: 10px;
         }
 
+        .navbar-top .left-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .navbar-top .lang-switcher {
             display: flex;
-            gap: 14px;
+            gap: 10px;
             align-items: center;
             font-size: 0.9rem;
         }
@@ -134,7 +139,7 @@
             color: inherit;
             cursor: pointer;
             font-weight: 600;
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 4px;
             transition: background 0.2s;
             font-size: 0.9rem;
@@ -144,6 +149,30 @@
         }
         .navbar-top .lang-switcher .active {
             color: #cc0000;
+        }
+
+        .navbar-top .right-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-placeholder {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #cc0000;
+            letter-spacing: -0.5px;
+            padding: 4px 12px;
+            border: 2px dashed #cc0000;
+            border-radius: 8px;
+            opacity: 0.6;
+            min-width: 80px;
+            text-align: center;
+        }
+        .logo-placeholder img {
+            max-height: 50px;
+            width: auto;
+            display: block;
         }
 
         .dark-toggle {
@@ -357,7 +386,7 @@
         .ceo-text h2 .red { color: #cc0000; }
         .ceo-text p { color: #222; font-size: 1.05rem; }
 
-        /* ===== TESTIMONIALS (RECTANGLE CARDS) ===== */
+        /* ===== TESTIMONIALS (LONG RECTANGLE CARDS) ===== */
         .testimonials-section {
             padding: 80px 60px;
             background: #ffffff;
@@ -372,15 +401,15 @@
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1300px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .testimonial-card {
             perspective: 1200px;
-            height: 340px;
+            height: 400px;
             cursor: pointer;
         }
         .testimonial-inner {
@@ -389,7 +418,7 @@
             height: 100%;
             transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
             transform-style: preserve-3d;
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0,0,0,0.06);
         }
@@ -402,12 +431,12 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 24px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 30px;
+            padding: 30px 24px;
             text-align: center;
         }
         .testimonial-front {
@@ -420,8 +449,8 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 24px;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 20px;
         }
         .testimonial-front .name {
             position: relative;
@@ -441,18 +470,20 @@
         }
         .testimonial-back {
             background: #cc0000;
-            color: #fff;
+            color: #000;
             transform: rotateY(180deg);
         }
         .testimonial-back h3 {
             font-size: 1.6rem;
             margin-bottom: 16px;
+            color: #000;
         }
         .testimonial-back p {
             font-size: 1rem;
             line-height: 1.7;
             opacity: 0.95;
             max-width: 260px;
+            color: #000;
         }
 
         /* ===== GET INVOLVED ===== */
@@ -521,11 +552,17 @@
         footer p { font-size: 1rem; margin-top: 16px; }
 
         /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 992px) {
             .navbar { padding: 8px 20px; }
             .navbar-top { flex-direction: column; align-items: stretch; gap: 6px; }
-            .navbar-top .lang-switcher { justify-content: center; flex-wrap: wrap; }
-            .dark-toggle { align-self: center; }
+            .navbar-top .left-group { justify-content: center; flex-wrap: wrap; }
+            .navbar-top .right-group { justify-content: center; }
             .navbar-bottom { gap: 14px; }
             .navbar-bottom a { font-size: 0.85rem; }
             .story-section, .ceo-section {
@@ -537,26 +574,57 @@
             .story-text p { max-width: 100%; }
             .ceo-image img { max-width: 300px; margin: 0 auto; }
             .testimonials-section { padding: 60px 30px; }
-            .testimonial-card { height: 300px; }
+            .testimonial-card { height: 340px; }
             .involve-section { padding: 60px 30px; }
             .header-spacer { height: 130px; }
             .donate-btn { padding: 14px 28px; font-size: 1rem; bottom: 20px; right: 20px; }
         }
+
+        @media (max-width: 768px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .testimonial-card { height: 280px; }
+            .testimonial-front .name { font-size: 1.5rem; }
+            .testimonial-front .subtitle { font-size: 1rem; }
+        }
+
         @media (max-width: 600px) {
             .navbar { padding: 6px 12px; }
             .navbar-top .lang-switcher button { font-size: 0.8rem; padding: 2px 6px; }
             .navbar-bottom { gap: 10px; }
             .navbar-bottom a { font-size: 0.75rem; }
+            .logo-placeholder { font-size: 1rem; min-width: 60px; padding: 2px 8px; }
             .hero-content h1 { font-size: 2.8rem; }
             .story-section, .ceo-section { padding: 30px 16px; }
             .testimonials-section { padding: 40px 16px; }
-            .testimonial-card { height: 260px; }
-            .testimonial-front .name { font-size: 1.5rem; }
-            .testimonial-front .subtitle { font-size: 1rem; }
+            .testimonials-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .testimonial-card { height: 220px; }
+            .testimonial-front .name { font-size: 1.2rem; }
+            .testimonial-front .subtitle { font-size: 0.85rem; }
+            .testimonial-back h3 { font-size: 1.2rem; }
+            .testimonial-back p { font-size: 0.85rem; max-width: 180px; }
             .involve-btn { min-width: 160px; padding: 14px 24px; font-size: 1rem; }
             .video-wrapper { max-width: 100%; }
             .header-spacer { height: 120px; }
             .donate-btn { padding: 10px 20px; font-size: 0.9rem; bottom: 16px; right: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .testimonial-card { height: 180px; }
+            .testimonial-front .name { font-size: 1rem; }
+            .testimonial-front .subtitle { font-size: 0.75rem; }
+            .testimonial-back { padding: 16px; }
+            .testimonial-back h3 { font-size: 1rem; margin-bottom: 8px; }
+            .testimonial-back p { font-size: 0.75rem; max-width: 140px; }
         }
     </style>
 </head>
@@ -564,16 +632,24 @@
 
     <!-- ===== STICKY HEADER ===== -->
     <header class="navbar" id="mainHeader">
-        <!-- Top row: Language + Dark mode -->
+        <!-- Top row: Language (left) + Logo space + Dark mode (right) -->
         <div class="navbar-top">
-            <div class="lang-switcher">
-                <button class="active" onclick="switchLang('en')">English</button>
-                <button onclick="switchLang('zh')">廣東話</button>
-                <button onclick="switchLang('cmn')">普通话</button>
+            <div class="left-group">
+                <div class="lang-switcher">
+                    <button class="active" onclick="switchLang('en')">English</button>
+                    <button onclick="switchLang('zh')">廣東話</button>
+                    <button onclick="switchLang('cmn')">普通话</button>
+                </div>
             </div>
-            <button class="dark-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
-                <i class="fas fa-moon"></i>
-            </button>
+            <div class="right-group">
+                <!-- LOGO -->
+    <div class="logo-placeholder">
+        <img src="love21_logo.png" alt="Logo" />
+    </div>
+                <button class="dark-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Bottom row: Navigation links -->
@@ -653,7 +729,7 @@
         </div>
     </section>
 
-    <!-- ===== TESTIMONIALS (RECTANGLE CARDS) ===== -->
+    <!-- ===== TESTIMONIALS (LONG RECTANGLE CARDS) ===== -->
     <section class="testimonials-section aniview" data-av-animation="fadeInUp" id="testimonials">
         <h2>Testimonials <span class="red">❤️</span></h2>
         <p>Hover over each card to flip and read their story</p>
@@ -665,7 +741,7 @@
                     <div class="testimonial-front" style="background-image: url('https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&h=400&fit=crop&crop=face');">
                         <div class="overlay"></div>
                         <span class="name">Crystal</span>
-                        <span class="subtitle">Confidence Builder</span>
+                        <span class="subtitle">Subtitle</span>
                     </div>
                     <div class="testimonial-back">
                         <h3>✨ Crystal</h3>
@@ -680,7 +756,7 @@
                     <div class="testimonial-front" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&crop=face');">
                         <div class="overlay"></div>
                         <span class="name">Marcus</span>
-                        <span class="subtitle">Community Leader</span>
+                        <span class="subtitle">Subtitle</span>
                     </div>
                     <div class="testimonial-back">
                         <h3>🌟 Marcus</h3>
@@ -695,7 +771,7 @@
                     <div class="testimonial-front" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=400&fit=crop&crop=face');">
                         <div class="overlay"></div>
                         <span class="name">Priya</span>
-                        <span class="subtitle">Workshop Facilitator</span>
+                        <span class="subtitle">Subtitle</span>
                     </div>
                     <div class="testimonial-back">
                         <h3>🎯 Priya</h3>
@@ -710,7 +786,7 @@
                     <div class="testimonial-front" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=400&fit=crop&crop=face');">
                         <div class="overlay"></div>
                         <span class="name">James</span>
-                        <span class="subtitle">Mentor & Guide</span>
+                        <span class="subtitle">Subtitle</span>
                     </div>
                     <div class="testimonial-back">
                         <h3>💪 James</h3>
@@ -778,37 +854,18 @@
 
         // ===== LANGUAGE SWITCHER =====
         function switchLang(lang) {
-            // Update active button style
             const buttons = document.querySelectorAll('.lang-switcher button');
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Placeholder for actual language switching
             const langNames = {
                 'en': 'English',
                 'zh': '廣東話',
                 'cmn': '普通话'
             };
             console.log(`Language switched to: ${langNames[lang]}`);
-            // You can add translation logic here later
         }
 
         // ===== SMOOTH SCROLL FOR NAV LINKS =====
         document.querySelectorAll('.navbar-bottom a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId && targetId.startsWith('#')) {
-                    const target = document.querySelector(targetId);
-                    if (target) {
-                        const headerHeight = document.querySelector('.navbar').offsetHeight;
-                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
-                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-                    }
-                }
-            });
-        });
-    </script>
-
-</body>
-</html>
+            link.addEventListener('click',
