@@ -604,6 +604,219 @@
             letter-spacing: 0.3px;
         }
 
+        /* ===== TEXTURE OVERLAY ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.025;
+            mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        body.dark-mode::before {
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+        }
+
+        /* ===== HERO BADGE ===== */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        .hero-badge i { color: #ff4d4d; }
+
+        /* ===== IMPACT TICKER ===== */
+        :root { --page-bg: #ffffff; }
+        body.dark-mode { --page-bg: #0a0a0a; }
+        .impact-ticker {
+            background: #cc0000;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 16px 0;
+            position: relative;
+        }
+        .impact-ticker::before,
+        .impact-ticker::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 9px;
+            background-image:
+                linear-gradient(135deg, var(--page-bg) 50%, transparent 50%),
+                linear-gradient(-135deg, var(--page-bg) 50%, transparent 50%);
+            background-size: 18px 18px;
+            background-repeat: repeat-x;
+            z-index: 1;
+        }
+        .impact-ticker::before { top: -1px; }
+        .impact-ticker::after { bottom: -1px; transform: rotate(180deg); }
+        .ticker-track {
+            display: inline-flex;
+            animation: ticker-scroll 26s linear infinite;
+            width: max-content;
+        }
+        .impact-ticker:hover .ticker-track { animation-play-state: paused; }
+        .ticker-track span {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 800;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            padding: 0 30px;
+        }
+        .ticker-track span i { margin: 0 26px; font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ===== STATS / IMPACT NUMBERS ===== */
+        .stats-section {
+            padding: 90px 60px 70px;
+            background: #ffffff;
+        }
+        body.dark-mode .stats-section { background: #0a0a0a; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 36px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
+        }
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px rgba(204, 0, 0, 0.1);
+            border-color: rgba(204, 0, 0, 0.25);
+        }
+        body.dark-mode .stat-card { border-color: #222; }
+        body.dark-mode .stat-card:hover { border-color: rgba(204, 0, 0, 0.4); }
+        .stat-card i {
+            font-size: 1.6rem;
+            color: #cc0000;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+        .stat-number::after {
+            content: attr(data-suffix);
+            color: #cc0000;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        body.dark-mode .stat-label { color: #999; }
+
+        /* ===== DECORATIVE BLOBS ===== */
+        .story-section, .involve-section { position: relative; overflow: hidden; }
+        .story-section::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 360px;
+            height: 360px;
+            background: radial-gradient(circle, rgba(204, 0, 0, 0.06), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .involve-section::before {
+            content: '';
+            position: absolute;
+            bottom: -140px;
+            left: -140px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(204, 0, 0, 0.07), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .story-section > *, .involve-section > * { position: relative; z-index: 1; }
+
+        /* ===== CEO IMAGE TILT ===== */
+        .ceo-image img { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .ceo-image:hover img {
+            transform: rotate(-2deg) scale(1.03);
+            box-shadow: 0 26px 60px rgba(204, 0, 0, 0.15);
+        }
+
+        /* ===== TESTIMONIAL STARS ===== */
+        .testimonial-back .stars { margin-bottom: 10px; color: #000; font-size: 0.85rem; letter-spacing: 3px; }
+
+        /* ===== NAV LINK UNDERLINE ===== */
+        .navbar-bottom a { position: relative; }
+        .navbar-bottom a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 0;
+            height: 2px;
+            background: #cc0000;
+            transition: width 0.25s ease;
+        }
+        .navbar-bottom a:hover::after { width: 100%; }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #111;
+            color: #fff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s, background 0.3s;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .back-to-top:hover { background: #cc0000; }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1200px) {
             .testimonials-grid {
@@ -784,6 +997,23 @@
                 max-width: 120px;
             }
         }
+
+        /* ===== NEW ELEMENTS: RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .ticker-track span { font-size: 0.9rem; padding: 0 22px; }
+        }
+        @media (max-width: 600px) {
+            .stats-section { padding: 60px 20px 40px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+            .stat-number { font-size: 2rem; }
+            .stat-card { padding: 22px 10px; }
+            .stat-card i { font-size: 1.3rem; margin-bottom: 10px; }
+            .back-to-top { width: 40px; height: 40px; left: 16px; bottom: 16px; }
+            .hero-badge { font-size: 0.65rem; padding: 6px 14px; margin-bottom: 16px; }
+            .ticker-track span { font-size: 0.75rem; padding: 0 16px; }
+            .ticker-track span i { margin: 0 14px; }
+        }
     </style>
 </head>
 <body>
@@ -826,6 +1056,11 @@
         <i class="fas fa-heart" style="margin-right: 8px;"></i> Donate
     </button>
 
+    <!-- ===== BACK TO TOP ===== -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
         <iframe 
@@ -835,11 +1070,52 @@
         </iframe>
         <div class="hero-overlay"></div>
         <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-heart"></i> Hong Kong &middot; Est. 2018</div>
             <h1>#SOMUCHABILITY</h1>
         </div>
         <div class="scroll-indicator">
             Scroll
             <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- ===== IMPACT TICKER ===== -->
+    <div class="impact-ticker" aria-hidden="true">
+        <div class="ticker-track">
+            <span>#SOMUCHABILITY <i class="fas fa-heart"></i></span>
+            <span>Every Ability Counts <i class="fas fa-star"></i></span>
+            <span>Inclusion Moves Us <i class="fas fa-hands-helping"></i></span>
+            <span>Join The Movement <i class="fas fa-bolt"></i></span>
+            <span>#SOMUCHABILITY <i class="fas fa-heart"></i></span>
+            <span>Every Ability Counts <i class="fas fa-star"></i></span>
+            <span>Inclusion Moves Us <i class="fas fa-hands-helping"></i></span>
+            <span>Join The Movement <i class="fas fa-bolt"></i></span>
+        </div>
+    </div>
+
+    <!-- ===== IMPACT NUMBERS ===== -->
+    <section class="stats-section aniview" data-av-animation="fadeInUp" id="impact">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <div class="stat-number" data-count="12" data-suffix="+">0</div>
+                <div class="stat-label">Years of Impact</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <div class="stat-number" data-count="3000" data-suffix="+">0</div>
+                <div class="stat-label">Lives Touched</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-hands-helping"></i>
+                <div class="stat-number" data-count="500" data-suffix="+">0</div>
+                <div class="stat-label">Volunteers</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-seedling"></i>
+                <div class="stat-number" data-count="40" data-suffix="+">0</div>
+                <div class="stat-label">Programmes Run</div>
+            </div>
         </div>
     </section>
 
@@ -901,6 +1177,7 @@
                         <span class="name">Crystal</span>
                     </div>
                     <div class="testimonial-back">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <h3>Subtitle</h3>
                         <p>lorem ipsum lalala ababbaba</p>
                     </div>
@@ -915,6 +1192,7 @@
                         <span class="name">Marcus</span>
                     </div>
                     <div class="testimonial-back">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <h3>Subtitle</h3>
                         <p>lorem ipsum lalala ababbaba</p>
                     </div>
@@ -929,6 +1207,7 @@
                         <span class="name">Priya</span>
                     </div>
                     <div class="testimonial-back">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <h3>Subtitle</h3>
                         <p>lorem ipsum lalala ababbaba</p>
                     </div>
@@ -943,6 +1222,7 @@
                         <span class="name">James</span>
                     </div>
                     <div class="testimonial-back">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <h3>Subtitle</h3>
                         <p>lorem ipsum lalala ababbaba</p>
                     </div>
@@ -1049,6 +1329,44 @@
 
         window.addEventListener('resize', updateProgress);
         updateProgress();
+
+        // ===== BACK TO TOP VISIBILITY =====
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.pageYOffset > 500);
+        });
+
+        // ===== STAT COUNT-UP =====
+        const statNumbers = document.querySelectorAll('.stat-number[data-count]');
+        const animateCount = (el) => {
+            const target = parseInt(el.getAttribute('data-count'), 10);
+            const duration = 1400;
+            const start = performance.now();
+            const step = (now) => {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(eased * target).toLocaleString();
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    el.textContent = target.toLocaleString();
+                }
+            };
+            requestAnimationFrame(step);
+        };
+        if ('IntersectionObserver' in window) {
+            const statObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCount(entry.target);
+                        statObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.4 });
+            statNumbers.forEach(el => statObserver.observe(el));
+        } else {
+            statNumbers.forEach(animateCount);
+        }
     </script>
 
 </body>
